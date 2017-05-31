@@ -1,6 +1,7 @@
 import logging
 from scipy import misc
 from scipy import ndimage
+from skimage import exposure
 
 import pylab
 
@@ -42,3 +43,11 @@ class ImageConverter:
         alpha = 3
         sharpened = blurred_f + alpha * (blurred_f - filter_blurred_f)
         misc.imsave('data/sample1-sharp.jpg', sharpened)
+
+    def to_exposure(self):
+        gamma_corrected = exposure.adjust_gamma(self.image, 2)
+        misc.imsave('data/sample1-brightness.jpg', gamma_corrected)
+
+    def to_contrast(self):
+        contrast = exposure.adjust_sigmoid(self.image, 0.6)
+        misc.imsave('data/sample1-contrast.jpg', contrast)

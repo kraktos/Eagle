@@ -22,6 +22,7 @@ import sys
 import logging
 
 from eagle import __version__
+from eagle.core import ImageConverter
 
 __author__ = "Arnab Dutta"
 __copyright__ = "Arnab Dutta"
@@ -62,11 +63,6 @@ def parse_args(args):
         action='version',
         version='Eagle {ver}'.format(ver=__version__))
     parser.add_argument(
-        dest="n",
-        help="n-th Fibonacci number",
-        type=int,
-        metavar="INT")
-    parser.add_argument(
         '-v',
         '--verbose',
         dest="loglevel",
@@ -103,7 +99,16 @@ def main(args):
     args = parse_args(args)
     setup_logging(args.loglevel)
     _logger.debug("Starting crazy calculations...")
-    print("The {}-th Fibonacci number is {}".format(args.n, fib(args.n)))
+
+    convert = ImageConverter(img="data/sample-1.jpg")
+    convert.to_ndarray()
+    convert.to_gray()
+    convert.to_blur()
+    convert.to_gray_blur()
+    convert.to_sharpen()
+    convert.to_exposure()
+    convert.to_contrast()
+
     _logger.info("Script ends here")
 
 
